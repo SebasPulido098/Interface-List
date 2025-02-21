@@ -1,4 +1,4 @@
-package co.edu.uptc.structures;
+package structures;
 
 public class Node<T> {
     T data;
@@ -8,7 +8,6 @@ public class Node<T> {
         this.data = data;
         this.next = null;
     }
-
 
 
     public T getData() {
@@ -26,10 +25,6 @@ public class Node<T> {
     public void setNext(Node<T> next) {
         this.next = next;
     }
-
-
-
-
 
 
 }
