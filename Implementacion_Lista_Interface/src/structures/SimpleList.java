@@ -209,23 +209,61 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        if (!c.getClass().equals(head.getData().getClass())) {
+            throw new UnsupportedOperationException("retainAll operation is not supported by this list.");
+        }
+        Node<T> aux = head;
+        while (aux.getNext() != null) {
+            if (!c.contains(aux.getData())) {
+                remove(aux.getData());
+            }
+            aux = aux.getNext();
+        }
+        return true;
+    
     }
 
     @Override
     public T set(int index, T element) {
-        return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
+        }
+        Node<T> aux = head;
+        int i = 0;
+        while (aux.getNext() != null || i < index - 1) {
+            aux = aux.getNext();
+            i++;
+        }
+        aux.setData(element);
+        T ret = aux.getData();
+        return ret;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        Node<T> aux = head;
+        int index = -1;
+        while (aux.getNext() != null) {  
+            if (o.equals(aux.getData())) {
+                return index;
+            }
+            index++;
+           aux = aux.getNext();
+        }
+        return -1;
+
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        for (int i = size() - 1; i > 0; i--) {
+            if (get(i) == o) {
+                return i;
+            }
+        }
+        return -1;
     }
+    
 
     @Override
     public ListIterator<T> listIterator() {
@@ -239,16 +277,43 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
-        return null;
+        if (fromIndex < 0 || toIndex > size() || fromIndex > toIndex) {
+            throw new IndexOutOfBoundsException();
+        }
+        List<T> subList= new SimpleList<>();
+
+        for (int index = fromIndex; index < toIndex; index++) {
+            subList.add(get(index));
+        }
+        return subList;
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        T[] result = (T[])new Object[size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i]=get(i);
+        }
+
+        return result;
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
-        return null;
+        if (a==null) {
+            throw new NullPointerException(a+" is null");
+        }
+        int size=size();
+        if (a.length<size) {
+            a=  (T1[]) new Object[size];
+        }
+        Node<T> aux = head;
+        int i = 0;
+        while (i< size&&aux.getNext()!=null) {
+            a[i]=(T1) get(i);
+            i++;
+            aux = aux.getNext();
+        }
+      return a;
     }
 }
