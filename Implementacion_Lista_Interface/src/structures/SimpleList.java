@@ -34,7 +34,7 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public boolean add(T e) {
-        if (e == null) throw new NullPointerException("No se permiten elementos nulos en la Lista.");
+        if (e == null) throw new NullPointerException("Null elements are not allowed in the List.");
         Node<T> newNode = new Node<>(e);
         if (isEmpty()) {
             head = newNode;
@@ -50,8 +50,8 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
-        if (element == null) throw new NullPointerException("No se permiten elementos nulos en la Lista.");
-        if (index < 0 || index > this.size()) throw new IndexOutOfBoundsException("Índice fuera de rango.");
+        if (element == null) throw new NullPointerException("Null elements are not allowed in the List.");
+        if (index < 0 || index > this.size()) throw new IndexOutOfBoundsException("Index out of range.");
         Node<T> newNode = new Node<>(element);
         if (index == 0) {
             newNode.setNext(head);
@@ -72,7 +72,7 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        if (c == null) throw new NullPointerException("La colección no puede ser nula.");
+        if (c == null) throw new NullPointerException("The collection cannot be null.");
         if (c.isEmpty()) return false;
         for (T element : c) {
             this.add(element);
@@ -82,10 +82,10 @@ public class SimpleList<T> implements List<T> {
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        if (c == null) throw new NullPointerException("La colección no puede ser nula.");
+        if (c == null) throw new NullPointerException("The collection cannot be null.");
         if (c.isEmpty()) return false;
         if (index < 0 || index > this.size())
-            throw new IndexOutOfBoundsException("Índice fuera de rango. Índice: " + index + ", Tamaño: " + this.size());
+            throw new IndexOutOfBoundsException("Index out of range. Index: " + index + ", Size: " + this.size());
         if (index == this.size()) return addAll(c);
         Node<T> actual = head;
         Node<T> previous = null;
@@ -198,7 +198,7 @@ public class SimpleList<T> implements List<T> {
             @Override
             public T next() {
                 if (!hasNext()) {
-                    throw new NoSuchElementException("No hay más elementos en la lista.");
+                    throw new NoSuchElementException("There are no more items in the list.");
                 }
                 T data = current.getData();
                 current = current.getNext();
